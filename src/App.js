@@ -1,12 +1,25 @@
-import logo from './logo.svg';
-import './App.css';
+import React from "react"
+
+import { BrowserRouter, Switch, Route } from "react-router-dom"
+
+// import { AuthProvider } from "../contexts/AuthContext"
+
+// import Chats from "./Chats"
+import Login from "./components/Login"
 
 function App() {
   return (
-    <div className="App">
-    <p>app</p>
+    <div>
+      <BrowserRouter>
+        {/* <AuthProvider> */}
+          <Switch>
+            {/* <Route path="/chats" component={Chats} /> */}
+            <Route path="/" component={Login} />
+          </Switch>
+        {/* </AuthProvider> */}
+      </BrowserRouter>
     </div>
-  );
+  )
 }
 
-export default App;
+export default App
