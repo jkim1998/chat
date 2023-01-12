@@ -1,28 +1,21 @@
-// Import the functions you need from the SDKs you need
 import firebase, { initializeApp } from "firebase/app";
-import { getAnalytics } from "firebase/analytics";
+import { getAuth } from "firebase/auth";
+import "firebase/firestore";
 import "firebase/auth";
-// import { getAuth } from "firebase/auth";
-// import { GoogleAuthProvider } from "firebase/auth";
+import "firebase/analytics";
 
-// TODO: Add SDKs for Firebase products that you want to use
-// https://firebase.google.com/docs/web/setup#available-libraries
+const firebaseConfig = {
+  apiKey: "AIzaSyB07a-2Jyesie2SqseZOS8idl3aKN5FgDg",
+  authDomain: "fooddelivery-e9737.firebaseapp.com",
+  databaseURL: "https://fooddelivery-e9737-default-rtdb.firebaseio.com",
+  projectId: "fooddelivery-e9737",
+  storageBucket: "fooddelivery-e9737.appspot.com",
+  messagingSenderId: "126455582870",
+  appId: "1:126455582870:web:5b69040a32b03dc88bf2b7",
+};
 
-// Your web app's Firebase configuration
-// For Firebase JS SDK v7.20.0 and later, measurementId is optional
-export const auth = firebase.initializeApp({
-  apiKey: "AIzaSyC1xXAWD57Q93x24TQSqcxh7Q9NxShKyfA",
-  authDomain: "chat-67d18.firebaseapp.com",
-  projectId: "chat-67d18",
-  storageBucket: "chat-67d18.appspot.com",
-  messagingSenderId: "341687704992",
-  appId: "1:341687704992:web:a5e90bb378ec19f7ab58c5",
-  measurementId: "G-HB3E4QHJ7N"
-}).auth();
+export const app = firebase.initializeApp(firebaseConfig);
 
-// Initialize Firebase
-// const app = initializeApp(firebaseConfig);
-// const analytics = getAnalytics(app);
-// export const auth = app.auth();
-// export const auth = getAuth();
-// export const provider = new GoogleAuthProvider();
+export const auth = firebase.auth();
+export const firestore = firebase.firestore();
+export const analytics = firebase.analytics();
