@@ -8,9 +8,36 @@ body {
   display: flex;
   justify-content: center;
   align-items: center;
-  background-color: #02b12d;
   height: 100vh;
   overflow: hidden;
+}
+
+.test {
+  background-color: #02b12d;
+  display: flex;
+  flex-direction: row;
+  border: 1px solid black;
+}
+
+.friendlist {
+  background-color: #0b93f6;
+  height: 1000px;
+  width: 200px;
+  overflow: hidden;
+  display: flex;
+  flex-direction: column;
+  overflow-y: scroll;
+  overflow-x: hidden;
+}
+
+.friend {
+  display: flex;
+  flex-direction: row;
+  width: auto;
+  align-items: center;
+  justify-content: center;
+  background-color: purple;
+  border: 1px solid black;
 }
 
 .chatroom {
@@ -19,6 +46,7 @@ body {
   border: 1px solid black;
   overflow: hidden;
   width: 1000px;
+  max-height: 1200px;
 }
 
 .container_chat {
@@ -26,7 +54,6 @@ body {
   flex-direction: column;
   justify-content: center;
   align-items: center;
-  height: 60vh;
   padding: 10px;
 }
 
@@ -38,7 +65,9 @@ body {
   border-bottom: 1px solid black;
 }
 
-.chatTitle p {
+.chatTitle * {
+  display: flex;
+  align-items: center;
   color: black;
 }
 
@@ -51,15 +80,15 @@ main {
   margin: 10px;
 }
 
-main::-webkit-scrollbar {
+::-webkit-scrollbar {
   width: 0.5rem;
 }
 
-main::-webkit-scrollbar-track {
+::-webkit-scrollbar-track {
   background: #1e1e24;
 }
 
-main::-webkit-scrollbar-thumb {
+::-webkit-scrollbar-thumb {
   background: #02b12d;
 }
 
@@ -165,7 +194,7 @@ button[type="submit"] {
 .sign_out {
   background-color: transparent;
   border: none;
-  padding: 10px;
+  padding: 0 10px;
   color: black;
 }
 
