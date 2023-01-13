@@ -93,6 +93,8 @@ function FriendsList() {
           <div className="friend">{displayName}</div>
           <div className="friend">{displayName}</div>
           <div className="friend">{displayName}</div>
+          <div className="friend">{displayName}</div>
+          <div className="friend">{displayName}</div>
         </div>
         <div className="searchbar">
           <form id="search">
