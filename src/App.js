@@ -8,6 +8,8 @@ import "firebase/analytics";
 
 import "./firebase";
 
+import errorimage from "./assets/image.png";
+
 import { useAuthState } from "react-firebase-hooks/auth";
 import { useCollectionData } from "react-firebase-hooks/firestore";
 
@@ -81,20 +83,24 @@ function FriendsList() {
           <h2>{displayName}</h2>
         </div>
         <div className="friendlist">
-          <div className="friend">{displayName}</div>
-          <div className="friend">{displayName}</div>
-          <div className="friend">{displayName}</div>
-          <div className="friend">{displayName}</div>
-          <div className="friend">{displayName}</div>
-          <div className="friend">{displayName}</div>
-          <div className="friend">{displayName}</div>
-          <div className="friend">{displayName}</div>
-          <div className="friend">{displayName}</div>
-          <div className="friend">{displayName}</div>
-          <div className="friend">{displayName}</div>
-          <div className="friend">{displayName}</div>
-          <div className="friend">{displayName}</div>
-          <div className="friend">{displayName}</div>
+          <div className="friend">
+            <img
+              src={
+                photoURL ||
+                "https://api.adorable.io/avatars/23/abott@adorable.png"
+              }
+            />
+            <p>ddddddddddddddddddddddddddddddddddddddddddddddddddd</p>
+          </div>
+          <div className="friend">
+            <img
+              src={
+                photoURL ||
+                "https://api.adorable.io/avatars/23/abott@adorable.png"
+              }
+            />
+            <p>{displayName}</p>
+          </div>
         </div>
         <div className="searchbar">
           <form id="search">
@@ -171,8 +177,6 @@ function ChatMessage(props) {
 
   const messageClass = uid === auth.currentUser.uid ? "sent" : "received";
 
-  // const ref = collection(firestore, "messages");
-
   return (
     <>
       <div className={`message ${messageClass}`}>
@@ -182,6 +186,10 @@ function ChatMessage(props) {
               photoURL ||
               "https://api.adorable.io/avatars/23/abott@adorable.png"
             }
+            onError={({ currentTarget }) => {
+              currentTarget.onerror = null;
+              currentTarget.src = { errorimage };
+            }}
           />
         </div>
 
