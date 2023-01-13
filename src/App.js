@@ -1,4 +1,4 @@
-import React, { useRef, useState, useContext } from "react";
+import React, { useRef, useState, useContext, useEffect } from "react";
 import "./App.css";
 
 import firebase from "firebase/app";
@@ -70,51 +70,34 @@ function FriendsList() {
   const { uid, photoURL, displayName } = auth.currentUser;
   return (
     <>
-      <div className="friendlist">
-        <div className="friend">
-          <p>{displayName}</p>
+      <div className="sidebar">
+        <div className="profile">
+          <img
+            src={
+              photoURL ||
+              "https://api.adorable.io/avatars/23/abott@adorable.png"
+            }
+          />
+          <h2>{displayName}</h2>
         </div>
-        <div className="friend">
-          <p>{displayName}</p>
+        <div className="friendlist">
+          <div className="friend">{displayName}</div>
+          <div className="friend">{displayName}</div>
+          <div className="friend">{displayName}</div>
+          <div className="friend">{displayName}</div>
+          <div className="friend">{displayName}</div>
+          <div className="friend">{displayName}</div>
+          <div className="friend">{displayName}</div>
+          <div className="friend">{displayName}</div>
+          <div className="friend">{displayName}</div>
+          <div className="friend">{displayName}</div>
+          <div className="friend">{displayName}</div>
+          <div className="friend">{displayName}</div>
         </div>
-        <div className="friend">
-          <p>{displayName}</p>
-        </div>
-        <div className="friend">
-          <p>{displayName}</p>
-        </div>
-        <div className="friend">
-          <p>{displayName}</p>
-        </div>
-        <div className="friend">
-          <p>{displayName}</p>
-        </div>
-        <div className="friend">
-          <p>{displayName}</p>
-        </div>
-        <div className="friend">
-          <p>{displayName}</p>
-        </div>
-        <div className="friend">
-          <p>{displayName}</p>
-        </div>
-        <div className="friend">
-          <p>{displayName}</p>
-        </div>
-        <div className="friend">
-          <p>{displayName}</p>
-        </div>
-        <div className="friend">
-          <p>{displayName}</p>
-        </div>
-        <div className="friend">
-          <p>{displayName}</p>
-        </div>
-        <div className="friend">
-          <p>{displayName}</p>
-        </div>
-        <div className="friend">
-          <p>{displayName}</p>
+        <div className="searchbar">
+          <form id="search">
+            <input placeholder="search for a friend"></input>
+          </form>
         </div>
       </div>
     </>
@@ -150,14 +133,14 @@ function ChatRoom() {
   };
 
   return (
-    <div className="test">
+    <div className="chat">
       <FriendsList />
       <div className="chatroom">
-        <div className="chatTitle">
-          <p>{user.displayName}</p>
-          <SignOut />
-        </div>
         <div className="container_chat">
+          <div className="chatTitle">
+            <h2>{user.displayName}</h2>
+            <SignOut />
+          </div>
           <main>
             {messages &&
               messages.map((msg) => <ChatMessage key={msg.id} message={msg} />)}
@@ -186,16 +169,24 @@ function ChatMessage(props) {
 
   const messageClass = uid === auth.currentUser.uid ? "sent" : "received";
 
+  // const ref = collection(firestore, "messages");
+
   return (
     <>
       <div className={`message ${messageClass}`}>
-        <p>{displayName}</p>
-        <img
-          src={
-            photoURL || "https://api.adorable.io/avatars/23/abott@adorable.png"
-          }
-        />
-        <p>{text}</p>
+        <div className="profilepic">
+          <img
+            src={
+              photoURL ||
+              "https://api.adorable.io/avatars/23/abott@adorable.png"
+            }
+          />
+        </div>
+
+        <div className="displayName">
+          <h1>{displayName}</h1>
+          <p>{text}</p>
+        </div>
       </div>
     </>
   );
