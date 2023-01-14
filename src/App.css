@@ -148,7 +148,7 @@ main {
   background: #02b12d;
 }
 
-form {
+#chatbox {
   width: 98%;
   height: 5%;
   margin-bottom: 15px;
@@ -194,7 +194,7 @@ button {
 
 button:hover {
   opacity: 80%;
-  color: #02b12d;
+  cursor: pointer;
   /* overflow: hidden; */
 }
 
@@ -246,12 +246,67 @@ button[type="submit"] {
   align-items: center;
 }
 
-.sign-in {
-  color: #282c34;
-  background: white;
-  max-width: 400px;
-  margin: 0 auto;
+.option {
+  display: flex;
+  flex-direction: row;
+  width: 100%;
+  background-color: #02b12d;
+  justify-content: space-between;
 }
+
+.option button {
+  background-color: #b2b7bb;
+  width: 50%;
+  border: 1px solid black;
+  overflow: hidden;
+}
+
+.option button:after {
+  background-color: #0774ce;
+}
+
+.log_in {
+  display: flex;
+  flex-direction: column;
+  gap: 50px;
+  padding: 100px;
+  border-radius: 15px;
+  background-color: rgb(255, 255, 255);
+  justify-content: space-between;
+}
+
+#login {
+  display: flex;
+  flex-direction: column;
+  line-height: 1.5;
+  font-size: 1.5rem;
+  width: 100%;
+  border: 1px solid black;
+}
+
+#login input {
+  width: auto;
+  font-size: 1.5rem;
+  background-color: transparent;
+  color: rgb(0, 0, 0);
+  margin: 10px;
+}
+
+#google {
+  background-color: #4285F4;
+}
+
+#facebook {
+  background-color: #4267B2;
+}
+
+.sign_in {
+  display: flex;
+  flex-direction: row;
+  justify-content: center;
+  padding: 30px 100px;
+}
+
 
 .sign_out {
   background-color: transparent;

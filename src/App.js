@@ -58,10 +58,18 @@ function SignIn() {
   return (
     <>
       <div className="log_in">
-        <button className="sign_in" onClick={signInWithGoogle}>
+        <div className="option">
+          <button>sign in</button>
+          <button>sign up</button>
+        </div>
+        <form id="login">
+          <input type="text" placeholder="Email" />
+          <input type="text" placeholder="password" />
+        </form>
+        <button id="google" className="sign_in" onClick={signInWithGoogle}>
           Sign in with Google
         </button>
-        <button className="sign_in" onClick={signInWithFacebook}>
+        <button id="facebook" className="sign_in" onClick={signInWithFacebook}>
           Sign in with Facebook
         </button>
       </div>
@@ -243,7 +251,7 @@ function ChatRoom() {
 
             <span ref={newchat}></span>
           </main>
-          <form onSubmit={sendMessage}>
+          <form id="chatbox" onSubmit={sendMessage}>
             <input
               type="text"
               value={formValue}
