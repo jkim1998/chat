@@ -2,9 +2,6 @@ import React, { useRef, useState, useContext, useEffect } from "react";
 import "./App.css";
 
 import firebase from "firebase/app";
-import "firebase/firestore";
-import "firebase/auth";
-import "firebase/analytics";
 
 import "./firebase";
 
@@ -13,14 +10,25 @@ import errorimage from "./assets/image.png";
 import { useAuthState } from "react-firebase-hooks/auth";
 import { useCollectionData } from "react-firebase-hooks/firestore";
 
-import { AiOutlineSend } from "react-icons/ai";
+import { AiOutlineSend, AiFillFileAdd } from "react-icons/ai";
 import { GoSignOut } from "react-icons/go";
 
 import { AuthContext } from "./contexts/AuthContext";
-
+import {
+  collection,
+  query,
+  where,
+  getDocs,
+  setDoc,
+  doc,
+  updateDoc,
+  serverTimestamp,
+  getDoc,
+} from "firebase/app";
 const auth = firebase.auth();
 const firestore = firebase.firestore();
 const analytics = firebase.analytics();
+const storage = firebase.storage();
 
 function App() {
   const [online] = useAuthState(auth);
@@ -36,14 +44,17 @@ function App() {
 
 function SignIn() {
   const signInWithGoogle = () => {
+    // const { uid, photoURL, displayName } = auth.currentUser;
     const provider = new firebase.auth.GoogleAuthProvider();
     auth.signInWithPopup(provider);
   };
+
   const signInWithFacebook = () => {
     const provider = new firebase.auth.FacebookAuthProvider();
     auth.signInWithPopup(provider);
   };
 
+  console.log("google");
   return (
     <>
       <div className="log_in">
@@ -65,6 +76,92 @@ function SignOut() {
         <GoSignOut />
       </button>
     )
+  );
+}
+
+function Search() {
+  const { uid, photoURL, displayName } = auth.currentUser;
+  // const users = firestore.collection("users");
+  const chatroom = firestore.collection("chatroom");
+  const [username, setUsername] = useState("");
+  const [user, setUser] = useState(null);
+  const [err, setErr] = useState(false);
+
+  const handleSearch = async () => {
+    const q = query(
+      collection(firestore, "users"),
+      where("displayName", "==", username)
+    );
+
+    try {
+      const querySnapshot = await getDocs(q);
+      querySnapshot.forEach((doc) => {
+        setUser(doc.data());
+      });
+    } catch (err) {
+      setErr(true);
+    }
+  };
+
+  const handleKey = (e) => {
+    e.code === "Enter" && handleSearch();
+  };
+
+  const handleSelect = async () => {
+    const combinedId =
+      { uid } > user.uid ? { uid } + user.uid : user.uid + { uid };
+    try {
+      const res = await getDoc(doc(firestore, "chatroom", combinedId));
+
+      if (!res.exists()) {
+        await setDoc(doc(firestore, "chatroom", combinedId), { messages: [] });
+
+        await updateDoc(doc(firestore, "users", { uid }), {
+          [combinedId + ".userInfo"]: {
+            uid: user.uid,
+            displayName: user.displayName,
+            photoURL: user.photoURL,
+          },
+          [combinedId + ".date"]: serverTimestamp(),
+        });
+
+        await updateDoc(doc(firestore, "users", user.uid), {
+          [combinedId + ".userInfo"]: {
+            uid: { uid },
+            displayName: { displayName },
+            photoURL: { photoURL },
+          },
+          [combinedId + ".date"]: serverTimestamp(),
+        });
+      }
+    } catch (err) {}
+
+    setUser(null);
+    setUsername("");
+  };
+  return (
+    <>
+      {user && (
+        <div className="finduser" onClick={handleSelect}>
+          <img src={user.photoURL} alt="" />
+          <div className="userChatInfo">
+            <span>{user.displayName}</span>
+          </div>
+        </div>
+      )}
+      {err && <span>User not found!</span>}
+      <div className="searchbar">
+        <form id="search">
+          <input
+            type="text"
+            placeholder="Find or start conversation"
+            onKeyDown={handleKey}
+            onChange={(e) => setUsername(e.target.value)}
+            value={username}
+          ></input>
+        </form>
+      </div>
+    </>
   );
 }
 
@@ -92,21 +189,8 @@ function FriendsList() {
             />
             <p>ddddddddddddddddddddddddddddddddddddddddddddddddddd</p>
           </div>
-          <div className="friend">
-            <img
-              src={
-                photoURL ||
-                "https://api.adorable.io/avatars/23/abott@adorable.png"
-              }
-            />
-            <p>{displayName}</p>
-          </div>
         </div>
-        <div className="searchbar">
-          <form id="search">
-            <input placeholder="search for a friend"></input>
-          </form>
-        </div>
+        {/* <Search /> */}
       </div>
     </>
   );
@@ -115,11 +199,12 @@ function FriendsList() {
 function ChatRoom() {
   const newchat = useRef();
   const messagesRef = firestore.collection("messages");
-  const query = messagesRef.orderBy("createdAt").limit(25);
+  const chatroom = firestore.collection("chatroom");
+  const query = messagesRef.orderBy("createdAt");
 
   const [messages] = useCollectionData(query, { idField: "id" });
-
   const [formValue, setFormValue] = useState("");
+  const [img, setImg] = useState(null);
 
   let user = firebase.auth().currentUser;
 
@@ -127,7 +212,10 @@ function ChatRoom() {
     e.preventDefault();
 
     const { uid, photoURL, displayName } = auth.currentUser;
-
+    // if (img) {
+    //   const storageRef = ref();
+    //   const uploadTask = uploadBy;
+    // } else {
     await messagesRef.add({
       text: formValue,
       createdAt: firebase.firestore.FieldValue.serverTimestamp(),
@@ -135,9 +223,9 @@ function ChatRoom() {
       photoURL,
       displayName,
     });
-
     setFormValue("");
     newchat.current.scrollIntoView({ behavior: "smooth" });
+    // }
   };
 
   return (
@@ -157,11 +245,22 @@ function ChatRoom() {
           </main>
           <form onSubmit={sendMessage}>
             <input
+              type="text"
               value={formValue}
               onChange={(e) => setFormValue(e.target.value)}
               placeholder="Send message"
             />
-
+            <div>
+              <input
+                type="file"
+                id="file"
+                onChange={(e) => setImg(e.target.files[0])}
+                placeholder=""
+              />
+              <label htmlFor="file" className="input_file">
+                <AiFillFileAdd />
+              </label>
+            </div>
             <button type="submit" disabled={!formValue}>
               <AiOutlineSend />
             </button>

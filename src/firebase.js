@@ -1,9 +1,9 @@
 import firebase, { initializeApp } from "firebase/app";
-import { getAuth } from "firebase/auth";
+// import { getAuth } from "firebase/auth";
 import "firebase/firestore";
 import "firebase/auth";
 import "firebase/analytics";
-
+import "firebase/storage";
 const firebaseConfig = {
   apiKey: "AIzaSyB07a-2Jyesie2SqseZOS8idl3aKN5FgDg",
   authDomain: "fooddelivery-e9737.firebaseapp.com",
@@ -14,8 +14,8 @@ const firebaseConfig = {
   appId: "1:126455582870:web:5b69040a32b03dc88bf2b7",
 };
 
-export const app = firebase.initializeApp(firebaseConfig);
+const app = initializeApp(firebaseConfig);
 
-export const auth = firebase.auth();
-export const firestore = firebase.firestore();
-export const analytics = firebase.analytics();
+const auth = firebase.auth();
+const firestore = firebase.firestore();
+const analytics = firebase.analytics();
