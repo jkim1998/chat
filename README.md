@@ -21,7 +21,7 @@ https://chat-plum.vercel.app/
 
 # ![WebApp](https://github.com/jkim1998/chat/blob/main/screenshot/1.png)
 
-### Footer
+### Chat Room
 
 
 # ![WebApp](https://github.com/jkim1998/chat/blob/main/screenshot/2.png)
@@ -29,7 +29,7 @@ https://chat-plum.vercel.app/
 
 ## Mobile support
 
-~~This WebApp is fully compatible with mobile devices of all sizes and all OS's, and consistent improvements are being made.~~
+~~~This WebApp is fully compatible with mobile devices of all sizes and all OS's, and consistent improvements are being made.~~~
 
 ## Development
 
