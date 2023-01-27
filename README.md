@@ -29,7 +29,7 @@ https://chat-plum.vercel.app/
 
 ## Mobile support
 
-~~~This WebApp is fully compatible with mobile devices of all sizes and all OS's, and consistent improvements are being made.~~~
+~~This WebApp is fully compatible with mobile devices of all sizes and all OS's, and consistent improvements are being made.~~
 
 ## Development
 
